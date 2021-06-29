@@ -1,7 +1,37 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import {Helmet} from "react-helmet";
+import useForm from "../helpers/useForm";
+import Button from "../components/button";
+import Validator from "Validator";
 
-const login = () => {
+const Login = () => {
+  const [form, setForm, errors] = useForm(
+    { 
+      req: {
+        email: '',
+        password: '', 
+      },
+      rules: {
+        email: 'required|email',
+        password: 'required',
+      },
+  });
+  const [loading, setLoading] = useState(false);
+  const storeHandle = (e) => {
+    e.preventDefault();
+    setLoading(true);
+    if (errors !== false) {
+      console.log("Berhasil");
+    }
+    setLoading(false);
+  };
   return (
+  <>
+    <Helmet>
+      <meta charSet="utf-8" />
+      <title>Login - Admin Panel</title>
+      <link rel="canonical" href="http://mysite.com/example" />
+    </Helmet>
   <div className="section">
     <div className="container mt-5">
       <div className="row">
@@ -14,27 +44,29 @@ const login = () => {
               <h4>Login Page</h4>
             </div>
             <div className="card-body">
-              <form method="POST" action="#" class="needs-validation" novalidate="">
-                <div class="form-group">
-                  <label for="email">Email</label>
-                  <input id="email" type="email" class="form-control" name="email" tabindex="1" required autofocus />
-                  <div class="invalid-feedback">
-                      Please fill in your email
-                  </div>
+              <form onSubmit={storeHandle}>
+                <div className="form-group">
+                  <label>Email</label>
+                  <input type="email" className={(errors.email) ? 'form-control is-invalid' : 'form-control'} name="email" tabIndex="1" onChange={(e) => setForm(e)} />
+                  {(errors.email) ? (
+                     <div className="invalid-feedback">
+                        {errors.email}
+                    </div>
+                  ) : ''}
                 </div>
-                <div class="form-group">
-                    <div class="d-block">
-                    	<label for="password" class="control-label">Password</label>
+                <div className="form-group">
+                    <div className="d-block">
+                    	<label className="control-label">Password</label>
                     </div>
-                    <input id="password" type="password" class="form-control" name="password" tabindex="2" required />
-                    <div class="invalid-feedback">
-                      please fill in your password
-                    </div>
+                    <input type="password" className={(errors.password) ? 'form-control is-invalid' : 'form-control'} name="password" onChange={(e) => setForm(e)} tabIndex="2" />
+                    {(errors.password) ? (
+                      <div className="invalid-feedback">
+                        please fill in your password
+                      </div>
+                    ) : ''}
                   </div>
-                  <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
-                      Login
-                    </button>
+                  <div className="form-group">
+                    <Button className="btn btn-primary btn-lg btn-block" loading={loading} value="Login" />
                   </div>
               </form>
             </div>
@@ -46,6 +78,7 @@ const login = () => {
       </div>
     </div>
   </div>
+  </>
   )
 };
-export default login;
+export default Login;

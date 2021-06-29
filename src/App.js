@@ -10,7 +10,7 @@ import Login from './pages/login';
 import AdminRoute from './pages/adminroute';
 
 function PrivateRoute({children, ...rest}) {
-  const isAuth = true;
+  const isAuth = false;
   return (
     <Route {...rest}>
       {(isAuth === true) ? (
@@ -26,12 +26,12 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route path="/">
+        <Route exact path="/">
           <Login />
         </Route>
-        <Route path="/admin">
+        <PrivateRoute path="/admin">
           <AdminRoute />  
-        </Route>
+        </PrivateRoute>
       </Switch>
     </Router>
   );
