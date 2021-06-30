@@ -1,16 +1,9 @@
-import React, {useState, useEffect} from "react";
 
 const Button = (props) => {
-  const [className, setClassName] = useState(props.className);
-  useEffect(() => {
-    if(props.loading === true) {
-      setClassName(className+" btn-progress");
-    } else {
-      setClassName(props.className);
-    }
-  },[props.loading])
+  const {className, ...others} = props;
+  const classValue = props.loading === true ? className+" btn-progress" : className;
   return (
-    <input type="submit" className={className} tabIndex="4" value={props.value} />
+    <input className={classValue} {...others} />
   );
 }
 export default Button;

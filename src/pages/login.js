@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {Helmet} from "react-helmet";
 import useForm from "../helpers/useForm";
 import Button from "../components/button";
-import Validator from "Validator";
+import Input from "../components/input";
 
 const Login = () => {
-  const [form, setForm, errors] = useForm(
+  const [form, setForm, isValid,  errors] = useForm(
     { 
       req: {
         email: '',
@@ -20,7 +20,7 @@ const Login = () => {
   const storeHandle = (e) => {
     e.preventDefault();
     setLoading(true);
-    if (errors !== false) {
+    if (isValid() === false) {
       console.log("Berhasil");
     }
     setLoading(false);
@@ -45,29 +45,27 @@ const Login = () => {
             </div>
             <div className="card-body">
               <form onSubmit={storeHandle}>
+                <Input 
+                  label="Email"
+                  type="email"
+                  className='form-control'
+                  name="email"
+                  tabIndex="1"
+                  onChange={(e) => setForm(e)}
+                  errors={errors.email}
+                />
+                <Input 
+                  label="Password"
+                  type="password"
+                  className='form-control'
+                  name="password"
+                  tabIndex="1"
+                  onChange={(e) => setForm(e)}
+                  errors={errors.password}
+                />
                 <div className="form-group">
-                  <label>Email</label>
-                  <input type="email" className={(errors.email) ? 'form-control is-invalid' : 'form-control'} name="email" tabIndex="1" onChange={(e) => setForm(e)} />
-                  {(errors.email) ? (
-                     <div className="invalid-feedback">
-                        {errors.email}
-                    </div>
-                  ) : ''}
+                  <Button className="btn btn-primary btn-lg btn-block" loading={loading} value="Login" type="submit" tabIndex="4" />
                 </div>
-                <div className="form-group">
-                    <div className="d-block">
-                    	<label className="control-label">Password</label>
-                    </div>
-                    <input type="password" className={(errors.password) ? 'form-control is-invalid' : 'form-control'} name="password" onChange={(e) => setForm(e)} tabIndex="2" />
-                    {(errors.password) ? (
-                      <div className="invalid-feedback">
-                        please fill in your password
-                      </div>
-                    ) : ''}
-                  </div>
-                  <div className="form-group">
-                    <Button className="btn btn-primary btn-lg btn-block" loading={loading} value="Login" />
-                  </div>
               </form>
             </div>
           </div>
