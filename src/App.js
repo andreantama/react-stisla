@@ -6,8 +6,10 @@ import {
   Redirect,
 } from "react-router-dom";
 import './App.css';
+import { useEffect } from "react";
 import Login from './pages/login';
 import AdminRoute from './pages/adminroute';
+import Toast from './components/toast';
 
 function PrivateRoute({children, ...rest}) {
   const isAuth = false;
@@ -23,7 +25,10 @@ function PrivateRoute({children, ...rest}) {
 }
 
 function App() {
+  
   return (
+    <>
+    <Toast />
     <Router>
       <Switch>
         <Route exact path="/">
@@ -34,6 +39,7 @@ function App() {
         </PrivateRoute>
       </Switch>
     </Router>
+    </>
   );
 }
 

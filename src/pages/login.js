@@ -4,8 +4,11 @@ import useForm from "../helpers/useForm";
 import Button from "../components/button";
 import Input from "../components/input";
 import Izitoast from "izitoast";
+import { useDispatch } from 'react-redux';
+import {toastActions} from '../store/toast';
 
 const Login = () => {
+  const dispatch = useDispatch();
   const [form, setForm, isValid,  errors] = useForm(
     { 
       req: {
@@ -23,11 +26,9 @@ const Login = () => {
     setLoading(true);
     if (isValid() === false) {
       console.log("Berhasil");
-      Izitoast.success({
-        title: 'AS',
-        message: 'AS',
-        position: 'topRight'
-      });
+      dispatch(toastActions.showSuccess({title: 'Berhasil', msg: 'Anda berhasil sign in'}));
+    } else {
+      dispatch(toastActions.showError({title: 'Terjadi Kesalahan', msg: 'Email dan password anda salah, silahkan lengkapi kembali form pengissian'}));
     }
     setLoading(false);
   };

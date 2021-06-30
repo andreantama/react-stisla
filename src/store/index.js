@@ -1,9 +1,7 @@
-import { createSlice, configureStore } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 import dataToastSlice from './toast';
 
 const store = configureStore({
-  reducer: {
-    toast: dataToastSlice.reducers
-  }
+  reducer: { toastData: dataToastSlice },
 });
 export default store;
