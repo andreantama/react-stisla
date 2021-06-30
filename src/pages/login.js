@@ -3,6 +3,7 @@ import {Helmet} from "react-helmet";
 import useForm from "../helpers/useForm";
 import Button from "../components/button";
 import Input from "../components/input";
+import Izitoast from "izitoast";
 
 const Login = () => {
   const [form, setForm, isValid,  errors] = useForm(
@@ -22,6 +23,11 @@ const Login = () => {
     setLoading(true);
     if (isValid() === false) {
       console.log("Berhasil");
+      Izitoast.success({
+        title: 'AS',
+        message: 'AS',
+        position: 'topRight'
+      });
     }
     setLoading(false);
   };
