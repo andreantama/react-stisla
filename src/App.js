@@ -12,7 +12,7 @@ import AdminRoute from './pages/adminroute';
 import Toast from './components/toast';
 
 function PrivateRoute({children, ...rest}) {
-  const isAuth = false;
+  const isAuth = true;
   return (
     <Route {...rest}>
       {(isAuth === true) ? (
